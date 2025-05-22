@@ -5,6 +5,7 @@
   import { toNumber } from '@/modules/shared/scripts/generic'
   import { api } from '@/sync/scripts/api.ts'
   import { average, calculateEstimatedValue } from '@/modules/calculators/scripts/formulas.ts'
+  import { PUBLIC_TRAMITA_NODE } from '$env/static/public'
 
   interface Props {
     supRegistralCons: number
@@ -38,7 +39,7 @@
 
     const requests = testigos.map(async (testigo: ITestigo) => {
       if (testigo.url) {
-        const response = await api.post('/api/get-portal-property-data', { url: testigo.url }, {}, import.meta.env.PUBLIC_TRAMITA_NODE)
+        const response = await api.post('/api/get-portal-property-data', { url: testigo.url }, {}, PUBLIC_TRAMITA_NODE)
 
         testigo.title = response.data.title
         testigo.price = formatPrice(response.data.price)

@@ -3,6 +3,7 @@
   import type { IProperty } from '@/sync/interfaces/IProperty'
   import 'leaflet/dist/leaflet.css'
   import { onMount } from 'svelte'
+  import { PUBLIC_MAP_TOKEN } from '$env/static/public'
 
   interface Props {
     properties: IProperty[]
@@ -39,7 +40,7 @@
 
     map = L.map('properties-map').setView([property.latitud, property.altitud], 15)
 
-    L.tileLayer(`https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.{ext}?api_key=${import.meta.env.PUBLIC_MAP_TOKEN}`, {
+    L.tileLayer(`https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.{ext}?api_key=${PUBLIC_MAP_TOKEN}`, {
       minZoom: 0,
       maxZoom: 20,
       ext: 'png',

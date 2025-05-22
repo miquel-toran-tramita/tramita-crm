@@ -18,7 +18,7 @@
     min?: string | undefined
     max?: string | undefined
     accept?: string
-    autofocus?: boolean
+
     errorMessage?: string
     validateEmail?: boolean
     value?: any
@@ -41,7 +41,7 @@
     step = '1',
     min = undefined,
     max = undefined,
-    autofocus = false,
+
     errorMessage = type === 'email' ? 'Dirección de email no válida' : 'Completa este campo',
     validateEmail = $bindable(),
     value = $bindable(),
@@ -334,7 +334,6 @@
         {max}
         name="input-{id}"
         {autocomplete}
-        {autofocus}
         {placeholder}
         class:isError
         use:typeAction
@@ -380,7 +379,6 @@
         id="input-{id}"
         name="input-{id}"
         {autocomplete}
-        {autofocus}
         {placeholder}
         class:isError
         use:typeAction

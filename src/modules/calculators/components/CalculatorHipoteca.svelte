@@ -6,6 +6,7 @@
   import Button from '@/modules/shared/components/Button.svelte'
   import { createChart1, createChart2 } from '@/modules/calculators/scripts/chartSimuladorHipoteca'
   import { generatePDFbyURL } from '@/modules/shared/scripts/pdf'
+  import { PUBLIC_BASE_URL } from '$env/static/public'
 
   let price: string = $state('150.000')
   let savings: string = $state('0')
@@ -42,7 +43,7 @@
   const generatePDF = async () => {
     loading = true
 
-    await generatePDFbyURL(`${import.meta.env.PUBLIC_BASE_URL}/calculadoras/templates/simulador-hipotecas${window.location.search}`)
+    await generatePDFbyURL(`${PUBLIC_BASE_URL}/calculadoras/templates/simulador-hipotecas${window.location.search}`)
 
     loading = false
   }

@@ -3,6 +3,8 @@
   import { menuItemsUp, menuItemsDown } from '@/modules/shared/constants/globalVariables'
   import type { IMenuItem } from '@/modules/shared/interfaces/IMenuItem'
   import { page } from '$app/state'
+  import { afterNavigate } from '$app/navigation'
+  import { tick } from 'svelte'
 
   interface Props {
     minimalist?: boolean
@@ -11,7 +13,17 @@
 
   let { minimalist = false, agent }: Props = $props()
 
-  const name = page.url.pathname.split('/')[1]
+  let top: number = $state(0)
+  let HTMLMenuItems: HTMLElement
+  let name = $state(page.url.pathname.split('/')[2])
+
+  afterNavigate(async () => {
+    name = page.url.pathname.split('/')[2]
+    await tick()
+
+    const rect = HTMLMenuItems.querySelector('.menu-item.active')?.getBoundingClientRect()
+    top = rect?.top ?? 0
+  })
 
   const favoriteItems: IMenuItem[] = menuItemsUp.filter((item: IMenuItem) => agent?.menuMovil.includes(item.title))
   const unfavoriteItems: IMenuItem[] = menuItemsUp.filter((item: IMenuItem) => !agent?.menuMovil.includes(item.title)).concat(menuItemsDown)
@@ -20,7 +32,8 @@
 </script>
 
 <style lang="scss">
-  @use '/src/sass/mixins.scss' as *;
+  @use '@/sass/mixins.scss' as *;
+
   .menu-left {
     padding-top: 20px;
     display: flex;
@@ -28,7 +41,6 @@
     flex-direction: column;
     justify-content: space-between;
     background-color: var(--colorNeutral);
-    //More css in LayoutMenus!
 
     .brand {
       display: flex;
@@ -65,15 +77,21 @@
         stroke: var(--colorText2);
       }
 
-      &.active {
-        border-left: 4px solid var(--colorPrimary);
-      }
-
       &__name {
         color: var(--colorText2);
         line-height: 1;
         font-size: 12px;
       }
+    }
+
+    .border-left {
+      transition: 0.3s ease;
+      position: absolute;
+      background: var(--colorPrimary);
+      height: 80px;
+      top: 0;
+      left: 0px;
+      width: 4px;
     }
 
     @include notDesktop {
@@ -156,7 +174,7 @@
   }
 </style>
 
-<div class="menu-left" class:minimalist>
+<div class="menu-left" bind:this={HTMLMenuItems} class:minimalist>
   <div class="menu-items-up">
     <a href="/panel" title="Home" class="brand">
       <Svg name="logo" width="40" height="40" />
@@ -170,6 +188,8 @@
       </a>
     {/each}
   </div>
+
+  <div class="border-left" style="top: {top}px"></div>
 
   <div class="menu-items-down">
     {#each menuItemsDown as menuItem, i}

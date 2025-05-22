@@ -1,9 +1,10 @@
 import { parseString } from 'xml2js'
-import type { IProperty } from '@/sync/interfaces/IProperty'
+import type { IProperty } from '@/modules/properties/interfaces/IProperty'
+import { PUBLIC_INMOVILLA_XML } from '$env/static/public'
 
 const parseXml = (xmlString: string) => {
   return new Promise((resolve, reject) => {
-    parseString(xmlString, { trim: true, explicitArray: false }, (err, result) => {
+    parseString(xmlString, { trim: true, explicitArray: false }, (err: any, result: any) => {
       if (err) reject(err)
       else resolve(result)
     })
@@ -211,10 +212,16 @@ const mapProperties = (result: any): IProperty[] => {
   return properties
 }
 
-export const fetchProperties = async (): Promise<IProperty[]> => {
-  const response = await fetch(import.meta.env.PUBLIC_INMOVILLA_XML || '')
+export const fetchProperties = async (customFetch: typeof fetch = fetch): Promise<IProperty[]> => {
+  const url = PUBLIC_INMOVILLA_XML || ''
+
+  if (!url || !url.startsWith('http')) {
+    throw new Error('Invalid PUBLIC_INMOVILLA_XML URL. Must be a valid HTTP URL.')
+  }
+
+  const response = await customFetch(url)
   const rawData = await response.text()
   const result = await parseXml(rawData)
-
+  
   return mapProperties(result)
 }

@@ -1,3 +1,5 @@
+import { PUBLIC_TRAMITA_NODE } from '$env/static/public'
+
 export const downloadBlob = (blob: Blob, pdfName: string = '') => {
   // Crear un elemento <a> para la descarga
   const a = document.createElement('a')
@@ -11,7 +13,7 @@ export const downloadBlob = (blob: Blob, pdfName: string = '') => {
 }
 
 export const generatePDFbyURL = async (url: string, pdfName: string = '') => {
-  const buffer = await fetch(`${import.meta.env.PUBLIC_TRAMITA_NODE}/api/url-to-pdf`, {
+  const buffer = await fetch(`${PUBLIC_TRAMITA_NODE}/api/url-to-pdf`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -27,7 +29,7 @@ export const generatePDFbyURL = async (url: string, pdfName: string = '') => {
 }
 
 export const generatePDFbyHTML = async (html: string, horizontal: boolean = false) => {
-  const buffer = await fetch(`${import.meta.env.PUBLIC_TRAMITA_NODE}/api/html-to-pdf`, {
+  const buffer = await fetch(`${PUBLIC_TRAMITA_NODE}/api/html-to-pdf`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
