@@ -1,0 +1,120 @@
+@font-face {
+  font-family: 'Poppins';
+  src: url('/assets/fonts/Poppins-Light.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gudea';
+  src: url('/assets/fonts/Gudea-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: var(--fontSecondary), sans-serif;
+  color: var(--colorText);
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+p,
+span,
+b,
+u {
+  margin: 0;
+  font-family: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  outline: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: 500;
+  font-family: var(--fontPrimary);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow: hidden;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  max-height: 100vh;
+  margin: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+input[type='checkbox'] {
+  cursor: pointer;
+  appearance: none;
+  background: none;
+  margin: 0;
+  border: none;
+  flex-shrink: 0;
+}
+
+hr {
+  border: 0;
+  border-bottom: 1px solid var(--colorBorder);
+  margin: 25px 0;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff00;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c9c9c9;
+  border-radius: 50px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #adadad;
+}

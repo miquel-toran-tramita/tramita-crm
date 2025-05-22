@@ -1,0 +1,6 @@
+export const CONTRACT_NAMES = {
+  RESERVA_COMPRADOR: 'Reserva Comprador',
+  ARRAS: 'Arras',
+}
+
+export const CONTRACTS = [CONTRACT_NAMES.RESERVA_COMPRADOR, CONTRACT_NAMES.ARRAS]

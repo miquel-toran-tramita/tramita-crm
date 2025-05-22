@@ -1,0 +1,31 @@
+:root {
+  --colorPrimary: #0e816c;
+  --colorSecondary: #ffffff;
+  --colorAccent: #1abc9c;
+  --colorNeutral: #f7f7f7;
+
+  --colorText: #222222;
+  --colorText2: #839693;
+  --colorText3: #f1f1f1;
+
+  --colorBorder: #d3d3d3;
+  --colorBlur: rgba(255, 255, 255, 0.8);
+  --colorError: #810e0e;
+
+  --radius: 10px;
+  --margin: 15px;
+  --menuHeight: 60px; // update globalVariables.ts MENU_HEIGHT
+  --fontPrimary: 'Gudea';
+  --fontSecondary: 'Poppins';
+}
+
+body.dark-mode {
+  --colorNeutral: #121212; // #282828
+  --colorSecondary: #282828;
+  --colorSecondary2: #3f3f3f;
+  --colorBlur: rgba(40, 40, 40, 0.8);
+  --colorBorder: rgba(255, 255, 255, 0.2);
+  --colorText: #f3f3f3;
+  --colorText2: #adadad;
+  --colorText3: #f1f1f1;
+}
