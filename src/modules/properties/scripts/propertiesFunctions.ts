@@ -29,18 +29,23 @@ export const filterProperties = (properties: IProperty[], filters: IFilters): IP
 
     if (filters.city && updatedProperty.ciudad !== filters.city) updatedProperty.hide = true
     if (filters.zone && updatedProperty.zona !== filters.zone) updatedProperty.hide = true
-    if (filters.tipoOfer.length && updatedProperty.tipo_ofer && !filters.tipoOfer.includes(updatedProperty.tipo_ofer)) updatedProperty.hide = true
+    if (filters.tipoOfer.length && updatedProperty.tipo_ofer && !filters.tipoOfer.includes(updatedProperty.tipo_ofer))
+      updatedProperty.hide = true
 
     if (!filters.nosell && updatedProperty.accion === 'Vender') updatedProperty.hide = true
     if (!filters.norent && updatedProperty.accion === 'Alquilar') updatedProperty.hide = true
     if (!filters.notransfer && updatedProperty.accion?.includes('Traspasar')) updatedProperty.hide = true
 
     if (updatedProperty.accion === 'Vender') {
-      if (filters.priceMax && updatedProperty.precioCompra && updatedProperty.precioCompra > toNumber(filters.priceMax)) updatedProperty.hide = true
-      if (filters.priceMin && updatedProperty.precioCompra && updatedProperty.precioCompra < toNumber(filters.priceMin)) updatedProperty.hide = true
+      if (filters.priceMax && updatedProperty.precioCompra && updatedProperty.precioCompra > toNumber(filters.priceMax))
+        updatedProperty.hide = true
+      if (filters.priceMin && updatedProperty.precioCompra && updatedProperty.precioCompra < toNumber(filters.priceMin))
+        updatedProperty.hide = true
     } else {
-      if (filters.priceMax && updatedProperty.precioAlquiler && updatedProperty.precioAlquiler > toNumber(filters.priceMax)) updatedProperty.hide = true
-      if (filters.priceMin && updatedProperty.precioAlquiler && updatedProperty.precioAlquiler < toNumber(filters.priceMin)) updatedProperty.hide = true
+      if (filters.priceMax && updatedProperty.precioAlquiler && updatedProperty.precioAlquiler > toNumber(filters.priceMax))
+        updatedProperty.hide = true
+      if (filters.priceMin && updatedProperty.precioAlquiler && updatedProperty.precioAlquiler < toNumber(filters.priceMin))
+        updatedProperty.hide = true
     }
 
     if (filters.sizeMax && updatedProperty.metrosCons && updatedProperty.metrosCons > toNumber(filters.sizeMax)) updatedProperty.hide = true

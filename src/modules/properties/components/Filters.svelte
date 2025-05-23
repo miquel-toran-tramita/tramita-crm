@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { IFilters } from '@/modules/properties/interfaces/IFilters'
+  import type { IProperty } from '@/modules/properties/interfaces/IProperty'
   import { ORDER_BY_OPTIONS, PRICES, SIZES, ROOMS_BATHS, DEFAULT_FILTERS } from '@/modules/properties/constants/filters'
   import { OFER_SVGS } from '@/modules/properties/constants/propertyRelated'
   import { slugify, formatPrice, capitalize, toNumber, getQueryParams } from '@/modules/shared/scripts/generic'
@@ -12,23 +13,17 @@
   import { onMount } from 'svelte'
   import { BREAKPOINT } from '@/modules/shared/constants/globalVariables'
   import { properties } from '@/store'
-  import type { IProperty } from '@/modules/properties/interfaces/IProperty'
+
+  interface Props {
+    propertiesClone: IProperty[]
+  }
+
+  let { propertiesClone = $bindable() }: Props = $props()
 
   let isMobile: boolean = $state(false)
   let classBordered: boolean = $state(false)
   let filtersClosed = $state(true)
-  let initialProperties: IProperty[] = $state([])
-  let filterOptions = $state<FilterOptions>({ ofers: [], locations: [] })
-
-  // Añadir tipos para filterOptions
-  interface FilterOptions {
-    ofers: string[]
-    locations: {
-      label: string
-      subOptions: string[]
-    }[]
-  }
-
+  let filterOptions = getFilters($properties)
   let filters: IFilters = $state(Object.assign({}, DEFAULT_FILTERS))
 
   const updateQueryParams = () => {
@@ -100,27 +95,12 @@
   )
 
   let onMounted: boolean = $state(false)
-  let filteredProperties: IProperty[] = $state([])
-
-  /*$effect(() => {
+  $effect(() => {
     if (!onMounted) return
 
-    if ($properties) {
-      if (initialProperties.length === 0) {
-        initialProperties = [...$properties]
-        const filters = getFilters(initialProperties)
-        filterOptions = {
-          ofers: filters.ofers.filter((ofer): ofer is string => ofer !== null && ofer !== undefined),
-          locations: filters.locations,
-        }
-      }
-
-      filteredProperties = filterProperties(initialProperties, filters)
-      properties.set(filteredProperties)
-    }
-
     updateQueryParams()
-  })*/
+    propertiesClone = filterProperties($properties, filters)
+  })
 
   onMount(() => {
     const params: any = getQueryParams(window.location.href)
@@ -129,9 +109,7 @@
 
     if (params.tipoOfer) {
       const newOfers = params.tipoOfer.split('-')
-
       newOfers.map((newOfer: string) => filters.tipoOfer.push(capitalize(newOfer)))
-
       filters.tipoOfer = [...filters.tipoOfer] // Forzar la reactividad
     }
 
@@ -142,28 +120,28 @@
         const currentZones = filterOptions.locations[locationIndex]?.subOptions || []
 
         filters.city = filterOptions.locations[locationIndex]?.label
-        filters.zone = currentZones.find((zone: string) => slugify(zone) === params.zone) || ''
+        filters.zone = currentZones.find((zone: string) => slugify(zone) === params.zone)
       }
     }
 
     if (params.orderBy) {
-      filters.orderBy = ORDER_BY_OPTIONS.find((x: string) => slugify(x) === params.orderBy) || ''
+      filters.orderBy = ORDER_BY_OPTIONS.find((x: string) => slugify(x) === params.orderBy)
     }
 
     if (params.priceMin) {
-      filters.priceMin = PRICES.find((x: string) => x === formatPrice(params.priceMin)) || ''
+      filters.priceMin = PRICES.find((x: string) => x === formatPrice(params.priceMin))
     }
 
     if (params.priceMax) {
-      filters.priceMax = PRICES.find((x: string) => x === formatPrice(params.priceMax)) || ''
+      filters.priceMax = PRICES.find((x: string) => x === formatPrice(params.priceMax))
     }
 
     if (params.sizeMin) {
-      filters.sizeMin = SIZES.find((x: string) => x === `${params.sizeMin} m²`) || ''
+      filters.sizeMin = SIZES.find((x: string) => x === `${params.sizeMin} m²`)
     }
 
     if (params.sizeMax) {
-      filters.sizeMax = SIZES.find((x: string) => x === `${params.sizeMax} m²`) || ''
+      filters.sizeMax = SIZES.find((x: string) => x === `${params.sizeMax} m²`)
     }
 
     if (params.rooms) filters.rooms = `${params.rooms}+`
@@ -191,7 +169,6 @@
 
   :global(.classBordered) {
     transition: 0.3s ease;
-    box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid var(--colorBorder);
   }
 
@@ -283,6 +260,10 @@
 
     .modal-filter {
       flex: 1;
+
+      &.front {
+        z-index: 7;
+      }
       :global(.options) {
         max-height: 200px !important;
       }
@@ -365,6 +346,10 @@
       span {
         font-size: 12px;
         color: var(--colorText2);
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }
@@ -476,12 +461,12 @@
       {/if}
 
       <div class="flex">
-        <div class="modal-filter">
+        <div class="modal-filter front">
           <h3>Precio mínimo</h3>
           <SelectSimple options={PRICES} bind:value={filters.priceMin} placeholder="Min" />
         </div>
 
-        <div class="modal-filter">
+        <div class="modal-filter front">
           <h3>Precio máximo</h3>
           <SelectSimple options={PRICES} bind:value={filters.priceMax} placeholder="Max" />
         </div>

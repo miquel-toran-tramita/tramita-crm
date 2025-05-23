@@ -35,6 +35,8 @@
   @use '@/sass/mixins.scss' as *;
 
   .menu-left {
+    position: fixed;
+    width: 100px;
     padding-top: 20px;
     display: flex;
     min-height: 100vh;
@@ -57,7 +59,6 @@
       gap: 10px;
       height: 80px;
       width: 100%;
-
       border-left: 4px solid transparent;
 
       &:hover,
@@ -102,11 +103,10 @@
   .menu-mobile {
     transition: 0.3s ease;
     display: none;
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 80px;
-    background-color: var(--colorBlur);
-    backdrop-filter: blur(20px);
+    background-color: var(--colorSecondary);
     box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
     z-index: 7;
     bottom: 0;

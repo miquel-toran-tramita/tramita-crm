@@ -10,7 +10,7 @@ export const handle = async ({ event, resolve }) => {
   const ignoredPaths = ['/.well-known/appspecific/com.chrome.devtools.json'] //Bug de SvelteKit
   if (ignoredPaths.includes(event.url.pathname)) {
     return new Response('Not found', { status: 404 })
-  } 
+  }
 
   if (sessionId) {
     const now = Math.floor(Date.now() / 1000)
@@ -24,8 +24,6 @@ export const handle = async ({ event, resolve }) => {
       currentUser = result.User
     }
   }
-
-  console.log('HOOOKS')
 
   event.locals.user = currentUser
   return resolve(event)

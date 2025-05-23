@@ -140,6 +140,7 @@
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+          flex-shrink: 0;
 
           &:hover {
             background-color: var(--colorNeutral);

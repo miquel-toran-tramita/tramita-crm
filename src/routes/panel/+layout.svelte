@@ -15,13 +15,11 @@
 
   let { data, children } = $props<{ data: PageData }>()
 
-  $effect(() => {
-    if (data) {
-      properties.set(data.properties)
-      agents.set(data.agents)
-      loggedAgent.set(data.currentAgent)
-    }
-  })
+  if (data) {
+    properties.set(data.properties)
+    agents.set(data.agents)
+    loggedAgent.set(data.currentAgent)
+  }
 </script>
 
 <style lang="scss">
@@ -32,7 +30,7 @@
     min-width: 100vw;
     background-color: var(--colorNeutral);
     display: grid;
-    grid-template-columns: 90px 1fr;
+    grid-template-columns: 100px 1fr;
     gap: 20px;
     padding-right: 20px;
   }
