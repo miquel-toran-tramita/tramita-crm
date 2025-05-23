@@ -1,7 +1,6 @@
 <script lang="ts">
   import Svg from '@/modules/shared/components/Svg.svelte'
   import { page } from '$app/state'
-  import { onMount } from 'svelte'
 
   interface IBreadCrumb {
     title: string

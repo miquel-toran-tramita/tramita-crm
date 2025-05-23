@@ -55,7 +55,7 @@
 </script>
 
 <style lang="scss">
-  @use 'src/sass/mixins.scss' as *;
+  @use '@/sass/mixins.scss' as *;
   .select-simple {
     position: relative;
     width: 100%;

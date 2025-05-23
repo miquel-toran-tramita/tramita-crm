@@ -1,5 +1,10 @@
 <script lang="ts">
-  let agent = {}
+  import { loggedAgent, agents } from '@/store'
+
+  $effect(() => {
+    console.log('Agentes:', $agents)
+    console.log('Agente actual:', $loggedAgent)
+  })
 </script>
 
 <style lang="scss">
@@ -34,10 +39,13 @@
 </style>
 
 <div class="home">
-  <img class="g-box" src={agent.avatar} alt="" />
-
-  <div>
-    <h1>¡Buenos días</h1>
-    <h2>{agent.username}!</h2>
-  </div>
+  {#if $loggedAgent}
+    <img class="g-box" src={$loggedAgent.avatar} alt="Avatar del agente" />
+    <div>
+      <h1>¡Buenos días</h1>
+      <h2>{$loggedAgent.username}!</h2>
+    </div>
+  {:else}
+    <div>Cargando datos del agente...</div>
+  {/if}
 </div>

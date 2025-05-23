@@ -4,14 +4,14 @@
   import type { ISelectSubOptions } from '@/modules/shared/interfaces/ISelectSubOptions'
 
   interface Props {
-    value?: string | number;
-    subValue?: string | number;
-    options?: ISelectSubOptions[];
-    icon?: string;
-    id?: string;
-    minWidth?: string;
-    placeholder?: string;
-    hideDelete?: boolean;
+    value?: string | number
+    subValue?: string | number
+    options?: ISelectSubOptions[]
+    icon?: string
+    id?: string
+    minWidth?: string
+    placeholder?: string
+    hideDelete?: boolean
   }
 
   let {
@@ -22,8 +22,8 @@
     id = '',
     minWidth = 'fit-content',
     placeholder = 'Selecciona una opción',
-    hideDelete = false
-  }: Props = $props();
+    hideDelete = false,
+  }: Props = $props()
 
   let HTMLSelect: HTMLElement = $state()
   let HTMLDropdown: HTMLElement = $state()
@@ -49,7 +49,7 @@
 </script>
 
 <style lang="scss">
-  @use 'src/sass/mixins.scss' as *;
+  @use '@/sass/mixins.scss' as *;
   .select-simple {
     position: relative;
     width: 100%;

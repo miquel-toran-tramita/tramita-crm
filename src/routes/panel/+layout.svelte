@@ -2,8 +2,26 @@
   import '@/sass/global.scss'
   import Menu from '@/modules/shared/components/Menu.svelte'
   import Breadcrumbs from '@/modules/shared/components/Breadcrumbs.svelte'
+  import { properties, agents, loggedAgent } from '@/store'
+  import type { IAgent } from '@/modules/users/interfaces/IAgent'
+  import type { IProperty } from '@/modules/properties/interfaces/IProperty'
 
-  let { children } = $props()
+  interface PageData {
+    properties: IProperty[]
+    agents: IAgent[]
+    currentAgent: IAgent
+    user: any
+  }
+
+  let { data, children } = $props<{ data: PageData }>()
+
+  $effect(() => {
+    if (data) {
+      properties.set(data.properties)
+      agents.set(data.agents)
+      loggedAgent.set(data.currentAgent)
+    }
+  })
 </script>
 
 <style lang="scss">
@@ -22,7 +40,7 @@
 
 <div class="panel-layout">
   <div class="panel-layout__menu">
-    <Menu />
+    <Menu agent={$loggedAgent} />
   </div>
 
   <div class="panel-layout__content">

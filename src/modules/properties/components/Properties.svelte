@@ -2,19 +2,11 @@
   import Filters from '@/modules/properties/components/Filters.svelte'
   import PropertyCard from '@/modules/properties/components/PropertyCard.svelte'
   import Button from '@/modules/shared/components/Button.svelte'
-  import { orderTipoOfers } from '@/modules/properties/scripts/propertiesFunctions'
-  import { onMount } from 'svelte'
-  import { api } from '@/sync/scripts/api'
-  import type { IProperty } from '@/sync/interfaces/IProperty'
+  import type { IProperty } from '@/modules/properties/interfaces/IProperty'
+  import { properties } from '@/store'
 
-  let properties: IProperty[] = $state([])
-  let propertiesFiltered = $derived(properties.filter((property: IProperty) => !property.hide))
-
-  onMount(async () => {
-    const response = await api.post('/api/private/properties')
-
-    properties = response.data.sort((a, b) => orderTipoOfers(a.tipo_ofer) - orderTipoOfers(b.tipo_ofer))
-  })
+  let isLoading = $state(true)
+  let propertiesFiltered: IProperty[] = $derived($properties.filter((property) => !property.hide))
 </script>
 
 <style lang="scss">
@@ -25,19 +17,32 @@
       align-items: stretch;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
+
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 200px;
+      font-size: 1.2em;
+      color: var(--colorNeutralDark);
+    }
   }
 </style>
 
 <div class="properties">
-  <Filters bind:properties />
+  <Filters />
 
-  <div class="properties-container">
-    {#each propertiesFiltered as property (property.ref)}
-      <a href="/propiedades/{property.ref}">
-        <PropertyCard {property} />
-      </a>
-    {/each}
-  </div>
+  {#if isLoading}
+    <div class="loading">Cargando propiedades...</div>
+  {:else}
+    <div class="properties-container">
+      {#each propertiesFiltered as property (property.ref)}
+        <a href="/propiedades/{property.ref}">
+          <PropertyCard {property} />
+        </a>
+      {/each}
+    </div>
+  {/if}
 
   <div class="g-new-btn-container">
     <a href="/propiedades/nueva" title="Crear nueva propiedad">

@@ -136,9 +136,9 @@ export const POST: RequestHandler = async ({ request }) => {
       (a, b) => orderTipoOfers(a.tipo_ofer || '') - orderTipoOfers(b.tipo_ofer || '')
     )
 
-    return json({ success: true, data: sortedProperties })
+    return json(sortedProperties)
   } catch (err) {
-    return json({ success: false, error: err instanceof Error ? err.message : 'Error desconocido' }, { status: 500 })
+    return json([])
   }
 }
 

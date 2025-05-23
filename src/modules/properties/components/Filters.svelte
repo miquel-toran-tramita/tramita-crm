@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { IFilters } from '@/modules/properties/interfaces/IFilters'
-  import type { IProperty } from '@/sync/interfaces/IProperty'
   import { ORDER_BY_OPTIONS, PRICES, SIZES, ROOMS_BATHS, DEFAULT_FILTERS } from '@/modules/properties/constants/filters'
   import { OFER_SVGS } from '@/modules/properties/constants/propertyRelated'
   import { slugify, formatPrice, capitalize, toNumber, getQueryParams } from '@/modules/shared/scripts/generic'
@@ -12,20 +11,23 @@
   import Svg from '@/modules/shared/components/Svg.svelte'
   import { onMount } from 'svelte'
   import { BREAKPOINT } from '@/modules/shared/constants/globalVariables'
-
-  interface Props {
-    isMapOpen?: boolean
-    isMobile?: boolean
-    properties?: IProperty[]
-  }
-
-  let { properties = $bindable([]) }: Props = $props()
+  import { properties } from '@/store'
+  import type { IProperty } from '@/modules/properties/interfaces/IProperty'
 
   let isMobile: boolean = $state(false)
   let classBordered: boolean = $state(false)
   let filtersClosed = $state(true)
-  let initialProperties = [...properties]
-  let filterOptions = getFilters(initialProperties)
+  let initialProperties: IProperty[] = $state([])
+  let filterOptions = $state<FilterOptions>({ ofers: [], locations: [] })
+
+  // Añadir tipos para filterOptions
+  interface FilterOptions {
+    ofers: string[]
+    locations: {
+      label: string
+      subOptions: string[]
+    }[]
+  }
 
   let filters: IFilters = $state(Object.assign({}, DEFAULT_FILTERS))
 
@@ -98,12 +100,27 @@
   )
 
   let onMounted: boolean = $state(false)
-  $effect(() => {
+  let filteredProperties: IProperty[] = $state([])
+
+  /*$effect(() => {
     if (!onMounted) return
 
+    if ($properties) {
+      if (initialProperties.length === 0) {
+        initialProperties = [...$properties]
+        const filters = getFilters(initialProperties)
+        filterOptions = {
+          ofers: filters.ofers.filter((ofer): ofer is string => ofer !== null && ofer !== undefined),
+          locations: filters.locations,
+        }
+      }
+
+      filteredProperties = filterProperties(initialProperties, filters)
+      properties.set(filteredProperties)
+    }
+
     updateQueryParams()
-    properties = filterProperties(initialProperties, filters)
-  })
+  })*/
 
   onMount(() => {
     const params: any = getQueryParams(window.location.href)
@@ -125,28 +142,28 @@
         const currentZones = filterOptions.locations[locationIndex]?.subOptions || []
 
         filters.city = filterOptions.locations[locationIndex]?.label
-        filters.zone = currentZones.find((zone: string) => slugify(zone) === params.zone)
+        filters.zone = currentZones.find((zone: string) => slugify(zone) === params.zone) || ''
       }
     }
 
     if (params.orderBy) {
-      filters.orderBy = ORDER_BY_OPTIONS.find((x: string) => slugify(x) === params.orderBy)
+      filters.orderBy = ORDER_BY_OPTIONS.find((x: string) => slugify(x) === params.orderBy) || ''
     }
 
     if (params.priceMin) {
-      filters.priceMin = PRICES.find((x: string) => x === formatPrice(params.priceMin))
+      filters.priceMin = PRICES.find((x: string) => x === formatPrice(params.priceMin)) || ''
     }
 
     if (params.priceMax) {
-      filters.priceMax = PRICES.find((x: string) => x === formatPrice(params.priceMax))
+      filters.priceMax = PRICES.find((x: string) => x === formatPrice(params.priceMax)) || ''
     }
 
     if (params.sizeMin) {
-      filters.sizeMin = SIZES.find((x: string) => x === `${params.sizeMin} m²`)
+      filters.sizeMin = SIZES.find((x: string) => x === `${params.sizeMin} m²`) || ''
     }
 
     if (params.sizeMax) {
-      filters.sizeMax = SIZES.find((x: string) => x === `${params.sizeMax} m²`)
+      filters.sizeMax = SIZES.find((x: string) => x === `${params.sizeMax} m²`) || ''
     }
 
     if (params.rooms) filters.rooms = `${params.rooms}+`
@@ -162,7 +179,7 @@
 </script>
 
 <style lang="scss">
-  @use '/src/sass/mixins.scss' as *;
+  @use '@/sass/mixins.scss' as *;
 
   :global(.menu) {
     background-color: var(--colorNeutral);
@@ -382,7 +399,7 @@
         <div class="ofers">
           {#each filterOptions.ofers as ofer}
             <button class="ofer" class:active={filters.tipoOfer.includes(ofer)} onclick={() => updateOfers(ofer)}>
-              <Svg name={OFER_SVGS[ofer] ? OFER_SVGS[ofer] : 'apartment'} fill="var(--colorText2)" />
+              <Svg name={OFER_SVGS[ofer as keyof typeof OFER_SVGS] ?? 'apartment'} fill="var(--colorText2)" />
               <span> {ofer === 'Local comercial' ? 'Local' : ofer} </span>
             </button>
           {/each}
@@ -439,7 +456,7 @@
         <div class="ofers">
           {#each filterOptions.ofers as ofer}
             <button class="ofer" class:active={filters.tipoOfer.includes(ofer)} onclick={() => updateOfers(ofer)}>
-              <Svg name={OFER_SVGS[ofer]} />
+              <Svg name={OFER_SVGS[ofer as keyof typeof OFER_SVGS] ?? 'apartment'} />
               <span> {ofer} </span>
             </button>
           {/each}
@@ -521,7 +538,7 @@
           filtersClosed = true
         }}
       >
-        <Svg name="delete" fill="var(--colorText2)" /> Limpiar todos los filtros</button
+        <Svg name="trash" fill="var(--colorText2)" /> Limpiar todos los filtros</button
       >
     </div>
   {/snippet}

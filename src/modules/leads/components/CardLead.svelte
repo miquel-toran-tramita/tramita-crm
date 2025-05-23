@@ -3,10 +3,10 @@
   import Button from '@/modules/shared/components/Button.svelte'
   import { api } from '@/sync/scripts/api'
   interface Props {
-    lead: ILead;
+    lead: ILead
   }
 
-  let { lead }: Props = $props();
+  let { lead }: Props = $props()
 
   let removed: boolean = $state(false)
   let quit: boolean = $state(false)
@@ -27,7 +27,7 @@
 </script>
 
 <style lang="scss">
-  @use 'src/sass/mixins.scss' as *;
+  @use '@/sass/mixins.scss' as *;
   .card-lead {
     transition: 0.3s ease;
     width: 100%;
