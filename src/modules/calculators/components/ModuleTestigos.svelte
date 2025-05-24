@@ -1,10 +1,10 @@
 <script lang="ts">
   import Button from '@/modules/shared/components/Button.svelte'
-  import { formatPrice } from '@/modules/shared/scripts/generic.ts'
+  import { formatPrice } from '@/modules/shared/scripts/generic'
   import Input from '@/modules/shared/components/Input.svelte'
   import { toNumber } from '@/modules/shared/scripts/generic'
-  import { api } from '@/sync/scripts/api.ts'
-  import { average, calculateEstimatedValue } from '@/modules/calculators/scripts/formulas.ts'
+  import { api } from '@/modules/shared/scripts/api'
+  import { average, calculateEstimatedValue } from '@/modules/calculators/scripts/formulas'
   import { PUBLIC_TRAMITA_NODE } from '$env/static/public'
 
   interface Props {
@@ -39,7 +39,7 @@
 
     const requests = testigos.map(async (testigo: ITestigo) => {
       if (testigo.url) {
-        const response = await api.post('/api/get-portal-property-data', { url: testigo.url }, {}, PUBLIC_TRAMITA_NODE)
+        const response = await api.post('/api/get-portal-property-data', { data: { url: testigo.url }, baseUrl: PUBLIC_TRAMITA_NODE })
 
         testigo.title = response.data.title
         testigo.price = formatPrice(response.data.price)

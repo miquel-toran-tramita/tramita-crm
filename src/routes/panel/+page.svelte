@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { loggedAgent, agents } from '@/store'
+  import { currentAgent, agents } from '@/store'
 </script>
 
 <style lang="scss">
@@ -34,11 +34,11 @@
 </style>
 
 <div class="home">
-  {#if $loggedAgent}
-    <img class="g-box" src={$loggedAgent.avatar} alt="Avatar del agente" />
+  {#if $currentAgent}
+    <img class="g-box" src={$currentAgent.avatar} alt="Avatar del agente" />
     <div>
       <h1>¡Buenos días</h1>
-      <h2>{$loggedAgent.username}!</h2>
+      <h2>{$currentAgent.username}!</h2>
     </div>
   {:else}
     <div>Cargando datos del agente...</div>

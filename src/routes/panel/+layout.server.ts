@@ -10,9 +10,11 @@ export const load = async ({ locals, fetch }) => {
   const responseProperties = await api.post('/api/private/properties', { customFetch: fetch })
   const responseAgents = await api.get('/api/private/agents', { customFetch: fetch })
   const responseContacts = await api.get('/api/private/contacts', { customFetch: fetch })
+  const responseEvents = await api.get('/api/private/events', { customFetch: fetch })
   const propertiesData: IProperty[] = responseProperties.data
   const agentsData: IAgent[] = responseAgents.data
   const contactsData: IContact[] = responseContacts.data
+  const eventsData: IContact[] = responseEvents.data
   const currentAgent: IAgent = agentsData.find((agent) => agent.id === locals.user.id) as IAgent
 
   return {
@@ -20,6 +22,7 @@ export const load = async ({ locals, fetch }) => {
     properties: propertiesData,
     agents: agentsData,
     contacts: contactsData,
+    events: eventsData,
     currentAgent,
   }
 }

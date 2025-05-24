@@ -7,14 +7,12 @@
   import { weekDays, dicTypes, eventDesigns } from '@/modules/calendar/constants/calendar'
   import Event from '@/modules/calendar/components/Event.svelte'
   import Svg from '@/modules/shared/components/Svg.svelte'
+  import { currentAgent, agents, events } from '@/store'
 
   import { getMondayOfDate, buildHours, compareDayDates, sumDays, isInDayHour } from '@/modules/calendar/scripts/calendar'
   import type { ILabelValue } from '@/modules/shared/interfaces/ILabelValue'
 
   interface Props {
-    events?: IEvent[]
-    agents?: IAgent[]
-    creator: IAgent
     globalDate?: Date
     simplified?: boolean
     organizeBy?: string
@@ -24,9 +22,6 @@
   }
 
   let {
-    events = [],
-    agents = [],
-    creator,
     globalDate = $bindable(),
     simplified = false,
     organizeBy = '',
@@ -61,7 +56,7 @@
 
         grid.push({
           date: tmpDate,
-          events: events.filter((ev: IEvent) => compareHourDates(new Date(ev.date), tmpDate)),
+          events: $events.filter((ev: IEvent) => compareHourDates(new Date(ev.date), tmpDate)),
         })
       })
     })
@@ -264,10 +259,10 @@
 
             {#if organizeBy === 'agent' && event.agent != cell.events[i - 1]?.agent}
               <div class="organized-agent">
-                {agents.find((a: IAgent) => event.agent === a.id).username}
+                {$agents.find((a: IAgent) => event.agent === a.id).username}
               </div>
             {/if}
-            <Event {event} {contacts} {agents} {events} {creator} {agentsOptions} />
+            <Event {event} {contacts} {agentsOptions} />
           {/each}
         {/if}
       </div>

@@ -5,7 +5,7 @@
   import PropertyCardRow from '@/modules/properties/components/PropertyCardRow.svelte'
   import ContactCardRow from '@/modules/contacts/components/ContactCardRow.svelte'
   import type { ILabelValue } from '@/modules/shared/interfaces/ILabelValue'
-  import type { IProperty } from '@/sync/interfaces/IProperty'
+  import type { IProperty } from '@/modules/properties/interfaces/IProperty'
   import type { IContact } from '@/modules/contacts/interfaces/IContact'
   import type { IEvent } from '@/modules/calendar/interfaces/IEvent'
   import type { IAgent } from '@/modules/users/interfaces/IAgent'
@@ -19,6 +19,7 @@
   import { dicTypes, dicRepeater, dicStatus, dicDuration } from '@/modules/calendar/constants/calendar'
   import { formatToDatetimeLocal } from '@/modules/shared/scripts/generic'
   import { api } from '@/modules/shared/scripts/api'
+  import { agents, events, currentAgent } from '@/store'
 
   let closedProperties: boolean = $state(true)
   let closedContacts: boolean = $state(true)
@@ -28,16 +29,14 @@
     closed?: boolean
     contacts?: IContact[]
     agentsOptions?: ILabelValue[]
-    creator: IAgent
-    events: IEvent[]
     updateEventId?: string
   }
 
-  let { closed = $bindable(true), contacts = [], agentsOptions = [], creator, events = $bindable(), updateEventId = '' }: Props = $props()
+  let { closed = $bindable(true), contacts = [], agentsOptions = [], updateEventId = '' }: Props = $props()
 
   let titleError: boolean = $state(false)
 
-  const eventToUpdate: IEvent = events.find((event: IEvent) => updateEventId === event.id)
+  const eventToUpdate: IEvent = $events.find((event: IEvent) => updateEventId === event.id)
 
   const types: ILabelValue[] = Object.entries(dicTypes).map(([key, label]) => ({ label, value: key }))
   const status: ILabelValue[] = Object.entries(dicStatus).map(([key, label]) => ({ label, value: key }))
@@ -52,7 +51,7 @@
     repeater: eventToUpdate?.repeater || '',
     duration: eventToUpdate?.duration || '',
     date: eventToUpdate?.date || formatToDatetimeLocal(),
-    agent: eventToUpdate?.agent || creator.id,
+    agent: eventToUpdate?.agent || $currentAgent.id,
     property: eventToUpdate?.property || null,
     contact: eventToUpdate?.contact || null,
     relatedAgents: eventToUpdate?.relatedAgents || '',
@@ -62,7 +61,7 @@
     if (!data.title) return (titleError = true)
     loading = true
     const newEvent: IEvent = (await api.post('/api/private/events', data)).data
-    events = [...events, newEvent]
+    $events = [...$events, newEvent]
     loading = false
     closed = true
   }
@@ -155,7 +154,7 @@
 
 <Modal bind:closed neutral maxWidth={800}>
   {#snippet modalHeader()}
-    <h2 slot="modal-header">{updateEventId ? `Editar "${data.title}"` : `Nuevo evento creado por ${creator.username}`}</h2>
+    <h2 slot="modal-header">{updateEventId ? `Editar "${data.title}"` : `Nuevo evento creado por ${$currentAgent.username}`}</h2>
   {/snippet}
 
   {#snippet modalContent()}

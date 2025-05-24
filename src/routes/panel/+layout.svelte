@@ -2,10 +2,12 @@
   import '@/sass/global.scss'
   import Menu from '@/modules/shared/components/Menu.svelte'
   import Breadcrumbs from '@/modules/shared/components/Breadcrumbs.svelte'
-  import { properties, agents, loggedAgent, contacts } from '@/store'
+  import { properties, agents, currentAgent, contacts } from '@/store'
   import type { IAgent } from '@/modules/users/interfaces/IAgent'
   import type { IProperty } from '@/modules/properties/interfaces/IProperty'
   import type { IContact } from '@/modules/contacts/interfaces/IContact'
+  import { fade } from 'svelte/transition'
+  import { page } from '$app/state'
 
   interface PageData {
     properties: IProperty[]
@@ -21,7 +23,7 @@
     properties.set(data.properties)
     agents.set(data.agents)
     contacts.set(data.contacts)
-    loggedAgent.set(data.currentAgent)
+    currentAgent.set(data.currentAgent)
   }
 </script>
 
@@ -41,13 +43,18 @@
 
 <div class="panel-layout">
   <div class="panel-layout__menu">
-    <Menu agent={$loggedAgent} />
+    <Menu agent={$currentAgent} />
   </div>
 
   <div class="panel-layout__content">
     <div class="breadcrumbs">
       <Breadcrumbs />
     </div>
-    {@render children()}
+
+    {#key page.url.pathname}
+      <main in:fade={{ delay: 300, duration: 200 }} out:fade={{ duration: 200 }}>
+        {@render children()}
+      </main>
+    {/key}
   </div>
 </div>

@@ -22,7 +22,7 @@
     await tick()
 
     const rect = HTMLMenuItems.querySelector('.menu-item.active')?.getBoundingClientRect()
-    top = rect?.top ?? 0
+    top = rect?.top - 15
   })
 
   const favoriteItems: IMenuItem[] = menuItemsUp.filter((item: IMenuItem) => agent?.menuMovil.includes(item.title))
@@ -39,15 +39,17 @@
     width: 100px;
     padding-top: 20px;
     display: flex;
-    min-height: 100vh;
+    min-height: calc(100vh - 14px);
     flex-direction: column;
     justify-content: space-between;
     background-color: var(--colorNeutral);
+    margin-top: 14px;
 
     .brand {
       display: flex;
       justify-content: center;
-      padding-bottom: 30px;
+      padding-bottom: 20px;
+
       margin-left: 4px;
     }
 

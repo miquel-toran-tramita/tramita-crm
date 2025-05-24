@@ -2,8 +2,8 @@
   import type { IEvent } from '@/modules/calendar/interfaces/IEvent'
   import type { IAgent } from '@/modules/users/interfaces/IAgent'
   import type { ILabelValue } from '@/modules/shared/interfaces/ILabelValue'
-  import { dicDuration, dicTypes, dicRepeater, dicStatus, eventDesigns } from '@/modules/calendar/constants/calendar.ts'
-  import { prettyDate } from '@/modules/calendar/scripts/calendar.ts'
+  import { dicDuration, dicTypes, dicRepeater, dicStatus, eventDesigns } from '@/modules/calendar/constants/calendar'
+  import { prettyDate } from '@/modules/calendar/scripts/calendar'
   import Svg from '@/modules/shared/components/Svg.svelte'
   import ModalEvent from './ModalEvent.svelte'
 
@@ -13,13 +13,10 @@
     contacts?: IContact[]
     agentsOptions?: ILabelValue[]
     event: IEvent
-    events?: IEvent[]
-    agents?: IAgent[]
-    creator: IAgent
     slim?: boolean
   }
 
-  let { contacts = [], agentsOptions = [], event, events = [], agents = [], creator, slim }: Props = $props()
+  let { contacts = [], agentsOptions = [], event, slim }: Props = $props()
 
   const date: Date = new Date(event.date)
   const horas = date.getHours()
@@ -204,4 +201,4 @@
   </button>
 </div>
 
-<ModalEvent bind:closed updateEventId={event?.id} {contacts} {creator} {events} {agentsOptions} />
+<ModalEvent bind:closed updateEventId={event?.id} {contacts} {agentsOptions} />

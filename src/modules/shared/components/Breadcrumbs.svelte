@@ -12,8 +12,8 @@
     const pathItems: string[] = pathname.split('/')
 
     return pathItems.map((item, index) => {
-      const path = `/${pathItems.slice(0, index + 1).join('/')}`
-      const title = item.charAt(0).toUpperCase() + item.slice(1)
+      const path = `${pathItems.slice(0, index + 1).join('/')}`
+      const title = item.charAt(0).toUpperCase() + item.slice(1).replace(/-/g, ' ')
 
       return {
         title,
