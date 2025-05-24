@@ -1,6 +1,6 @@
 <script lang="ts">
   import Svg from '@/modules/shared/components/Svg.svelte'
-  import type { IContact } from '../interfaces/IContact'
+  import type { IContact } from '@/modules/contacts/interfaces/IContact'
 
   interface Props {
     contact: IContact
@@ -15,15 +15,6 @@
     position: relative;
     overflow: hidden;
     padding: 20px;
-
-    .contact-id {
-      position: absolute;
-      right: 20px;
-      bottom: 20px;
-      color: var(--colorText2);
-      font-size: 12px;
-      font-style: italic;
-    }
 
     .acc-activated {
       position: absolute;
@@ -97,10 +88,6 @@
           <Svg name="logo" fill="var(--colorPrimary)" />
         </div>
       {/if}
-
-      <div class="contact-id">
-        {contact.id}
-      </div>
 
       <div class="buyer-seller">
         {#if contact.buyer}

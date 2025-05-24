@@ -41,7 +41,8 @@
 
     .text {
       color: var(--colorPrimary);
-      font-size: 18px;
+      font-family: var(--fontPrimary);
+      font-size: 20px;
       display: flex;
       align-items: center;
 

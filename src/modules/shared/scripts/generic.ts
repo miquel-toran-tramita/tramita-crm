@@ -112,7 +112,10 @@ export const slugify = (text: string): string => {
     .replace(/\-\-+/g, '-') // Replace multiple - with single -
 }
 
-export const copyToClipboard = () => {}
+export const copyToClipboard = (text: string) => {
+  if (!text) return
+  navigator.clipboard.writeText(text)
+}
 
 export const formatToDatetimeLocal = () => {
   const now = new Date()

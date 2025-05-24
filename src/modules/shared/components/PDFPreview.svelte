@@ -3,7 +3,7 @@
   import { downloadBlob, generatePDFbyHTML } from '@/modules/shared/scripts/pdf'
   import { onMount, tick } from 'svelte'
   import { blobToBase64, debounce } from '@/modules/shared/scripts/generic'
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
 
   interface Props {
     header?: any
@@ -163,9 +163,11 @@
     const base64Content = await blobToBase64(blob)
 
     await api.post('/api/private/google/drive', {
-      folderId,
-      fileName: pdfName,
-      fileContent: base64Content,
+      data: {
+        folderId,
+        fileName: pdfName,
+        fileContent: base64Content,
+      },
     })
 
     loadingDrive = false

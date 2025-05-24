@@ -5,7 +5,7 @@
   import type { IQRUrlItem } from '@/modules/QRUrl/interfaces/IQRUrlItem'
   import { formatToInputDate } from '@/modules/shared/scripts/generic'
   import Svg from '@/modules/shared/components/Svg.svelte'
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
 
   let closed: boolean = $state(true)
 

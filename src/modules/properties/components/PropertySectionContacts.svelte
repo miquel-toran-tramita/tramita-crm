@@ -2,7 +2,7 @@
   import ContactSelector from '@/modules/contacts/components/ContactSelector.svelte'
   import Button from '@/modules/shared/components/Button.svelte'
   import type { IContact } from '@/modules/contacts/interfaces/IContact'
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
   import PersonalData from '@/modules/contacts/components/PersonalData.svelte'
 
   interface Props {

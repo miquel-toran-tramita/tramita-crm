@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
   import type { IContact } from '@/modules/contacts/interfaces/IContact'
   import Modal from '@/modules/shared/components/Modal.svelte'
   import { onMount } from 'svelte'

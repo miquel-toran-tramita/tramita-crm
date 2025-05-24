@@ -2,7 +2,7 @@
   import Button from '@/modules/shared/components/Button.svelte'
   import Input from '@/modules/shared/components/Input.svelte'
   import QRCodeStyling from 'qr-code-styling'
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
   import { blobToBase64 } from '@/modules/shared/scripts/generic'
   import { generateId } from 'lucia'
 

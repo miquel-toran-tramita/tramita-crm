@@ -9,7 +9,7 @@
   import SelectSimple from '@/modules/shared/components/SelectSimple.svelte'
   import { ACCION, TIPO_OFERS, ESTADOS_CONSERVACION, ORIENTACIONES } from '@/modules/properties/constants/propertyRelated'
   import DataSection from '@/modules/shared/components/DataSection.svelte'
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
   import type { SvgStore } from '@/modules/shared/interfaces/ISvgStore'
 
   interface Props {

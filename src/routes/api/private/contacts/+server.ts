@@ -9,16 +9,17 @@ export const GET = async ({ url }) => {
     const buyer = url.searchParams.get('buyer')
     const seller = url.searchParams.get('seller')
     const search = url.searchParams.get('search')?.toLowerCase() ?? ''
-
     const conditions = []
-
+    
+    
     if (buyer === 'true') {
       conditions.push(eq(Contact.buyer, true))
     }
-
+    
     if (seller === 'true') {
       conditions.push(eq(Contact.seller, true))
     }
+
 
     if (search) {
       const pattern = `%${search}%`
@@ -37,6 +38,7 @@ export const GET = async ({ url }) => {
       .select()
       .from(Contact)
       .where(and(...conditions))
+
 
     return json(contacts)
   } catch (err) {

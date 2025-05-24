@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
   import Checkbox from '@/modules/shared/components/Checkbox.svelte'
 
   let { agent } = $props()

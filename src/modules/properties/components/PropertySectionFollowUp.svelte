@@ -1,6 +1,6 @@
 <script lang="ts">
   import Button from '@/modules/shared/components/Button.svelte'
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
 
   interface Props {
     ref: string

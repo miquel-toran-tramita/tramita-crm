@@ -60,7 +60,7 @@ html {
 }
 
 body {
-  overflow: hidden;
+  overflow-x: hidden;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   background-color: var(--colorNeutral);

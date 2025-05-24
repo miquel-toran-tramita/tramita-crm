@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { IContact } from '@/modules/contacts/interfaces/IContact'
   import Button from '@/modules/shared/components/Button.svelte'
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
 
   interface Props {
     contact: IContact

@@ -1,10 +1,5 @@
 <script lang="ts">
   import { loggedAgent, agents } from '@/store'
-
-  $effect(() => {
-    console.log('Agentes:', $agents)
-    console.log('Agente actual:', $loggedAgent)
-  })
 </script>
 
 <style lang="scss">

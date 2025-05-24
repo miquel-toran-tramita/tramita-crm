@@ -1,6 +1,6 @@
 <script lang="ts">
   import Checkbox from '@/modules/shared/components/Checkbox.svelte'
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
   import { SELLER_STEPS } from '@/sync/constants/progressSteps'
 
   let { contact = $bindable() } = $props()

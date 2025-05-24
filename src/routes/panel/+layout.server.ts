@@ -15,8 +15,6 @@ export const load = async ({ locals, fetch }) => {
   const contactsData: IContact[] = responseContacts.data
   const currentAgent: IAgent = agentsData.find((agent) => agent.id === locals.user.id) as IAgent
 
-  console.log(contactsData)
-
   return {
     user: locals.user,
     properties: propertiesData,

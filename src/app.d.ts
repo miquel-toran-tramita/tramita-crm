@@ -10,10 +10,17 @@ declare global {
     // interface PageState {}
     // interface Platform {}
 
+    interface HTMLAttributes<T> {
+      'copy-to-clipboard'?: string
+    }
+
     interface Locals {
       user: User | null
     }
   }
+
 }
+
+
 
 export {}

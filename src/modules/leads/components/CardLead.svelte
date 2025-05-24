@@ -1,7 +1,8 @@
 <script lang="ts">
   import type { ILead } from '@/modules/leads/interfaces/ILead'
   import Button from '@/modules/shared/components/Button.svelte'
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
+  import { contacts } from '@/store'
   interface Props {
     lead: ILead
   }
@@ -12,14 +13,17 @@
   let quit: boolean = $state(false)
 
   const leadToContact = async () => {
-    await api.post('/api/private/leads/lead-to-contact', lead)
+    await api.post('/api/private/leads/lead-to-contact', { data: lead })
 
     removed = true
     setTimeout(() => (quit = true), 1000)
+
+    const newContacts = await api.get('/api/private/contacts')
+    contacts.set(newContacts)
   }
 
   const remove = async () => {
-    await api.delete('/api/private/leads', lead.id)
+    await api.delete('/api/private/leads', { data: lead.id })
 
     removed = true
     setTimeout(() => (quit = true), 1000)

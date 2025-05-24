@@ -1,6 +1,6 @@
 <script lang="ts">
   import Checkbox from '@/modules/shared/components/Checkbox.svelte'
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
   import { onMount } from 'svelte'
   import type { IUser } from '@/modules/users/interfaces/IUser'
   import { menuItemsUp } from '@/modules/shared/constants/globalVariables'

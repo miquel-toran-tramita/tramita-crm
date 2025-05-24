@@ -18,7 +18,7 @@
 
   import { dicTypes, dicRepeater, dicStatus, dicDuration } from '@/modules/calendar/constants/calendar'
   import { formatToDatetimeLocal } from '@/modules/shared/scripts/generic'
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
 
   let closedProperties: boolean = $state(true)
   let closedContacts: boolean = $state(true)

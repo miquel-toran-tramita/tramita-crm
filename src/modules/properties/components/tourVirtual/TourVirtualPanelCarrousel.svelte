@@ -9,7 +9,7 @@
 
   import imageCompression from 'browser-image-compression'
   import { generateId } from 'lucia'
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
   import { base64ToFile } from '@/modules/properties/scripts/tourVirtualHelpers'
 
   interface Props {

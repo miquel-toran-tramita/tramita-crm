@@ -35,9 +35,9 @@
     loading = true
 
     if (editMode) {
-      await api.put('/api/private/pactos', formPacto)
+      await api.put('/api/private/pactos', { data: formPacto })
     } else {
-      await api.post('/api/private/pactos', formPacto)
+      await api.post('/api/private/pactos', { data: formPacto })
     }
 
     const response = await api.get('/api/private/pactos')
@@ -59,7 +59,11 @@
     if (editMode && formPacto.id) {
       loading = true
 
-      await api.delete('/api/private/pactos', { id: formPacto.id })
+      await api.delete('/api/private/pactos', {
+        data: {
+          id: formPacto.id,
+        },
+      })
 
       const response = await api.get('/api/private/pactos')
       pactos = response.data

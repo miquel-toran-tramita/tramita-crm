@@ -5,7 +5,7 @@
   import Button from '@/modules/shared/components/Button.svelte'
   import Input from '@/modules/shared/components/Input.svelte'
   import type { SvgStore } from '@/modules/shared/interfaces/ISvgStore'
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
   import { uncompressContactPreference, uncompressTimePreference } from '@/sync/scripts/compressPreferences'
   import type { IContact } from '@/modules/contacts/interfaces/IContact'
 

@@ -2,14 +2,16 @@
   import '@/sass/global.scss'
   import Menu from '@/modules/shared/components/Menu.svelte'
   import Breadcrumbs from '@/modules/shared/components/Breadcrumbs.svelte'
-  import { properties, agents, loggedAgent } from '@/store'
+  import { properties, agents, loggedAgent, contacts } from '@/store'
   import type { IAgent } from '@/modules/users/interfaces/IAgent'
   import type { IProperty } from '@/modules/properties/interfaces/IProperty'
+  import type { IContact } from '@/modules/contacts/interfaces/IContact'
 
   interface PageData {
     properties: IProperty[]
     agents: IAgent[]
     currentAgent: IAgent
+    contacts: IContact[]
     user: any
   }
 
@@ -18,6 +20,7 @@
   if (data) {
     properties.set(data.properties)
     agents.set(data.agents)
+    contacts.set(data.contacts)
     loggedAgent.set(data.currentAgent)
   }
 </script>

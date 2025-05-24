@@ -2,7 +2,7 @@
   import type { IQRUrlItem } from '@/modules/QRUrl/interfaces/IQRUrlItem'
   import Button from '@/modules/shared/components/Button.svelte'
   import Input from '@/modules/shared/components/Input.svelte'
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
 
   interface Props {
     QRUrlItem: IQRUrlItem

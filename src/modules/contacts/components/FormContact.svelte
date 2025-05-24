@@ -8,7 +8,7 @@
 
   import type { IContact } from '@/modules/contacts/interfaces/IContact'
   import type { ILabelValue } from '@/modules/shared/interfaces/ILabelValue'
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
   import { generateRandomString } from '@/modules/shared/scripts/avatar'
 
   let options: ILabelValue[] = $state([])

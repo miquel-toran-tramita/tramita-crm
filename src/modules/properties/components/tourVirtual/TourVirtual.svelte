@@ -2,7 +2,7 @@
   import type { BridgeType, ClickModeType, IBridge, ITourScene } from '@/sync/interfaces/ITourScene'
   import { CLICK_MODES } from '@/modules/properties/constants/tourVirtual'
   import { TourVirtual } from '@/modules/properties/scripts/TourVirtual'
-  import { api } from '@/sync/scripts/api'
+  import { api } from '@/modules/shared/scripts/api'
   import { generateId } from 'lucia'
   import { onMount } from 'svelte'
 
